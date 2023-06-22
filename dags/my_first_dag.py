@@ -10,7 +10,7 @@ from airflow.operators.bash import BashOperator
 
 with DAG(
     'my_first_dag',
-    start_date=days_ago(1),
+    start_date=days_ago(2),
     schedule_interval='@daily'
 ) as dag:
 
@@ -19,8 +19,8 @@ with DAG(
         tarefa_3 = EmptyOperator(task_id='tarefa_3')
         tarefa_4 = BashOperator(
             task_id='cria_pasta',
-            bash_command='mkdir -p "home/millenagena/Documents/airflowstudy/pasta" '
+            bash_command='mkdir -p "/home/lia/Documents/airflowstudy/pasta={{data_interval_end}}" '
         )
 
-        tarefa_1 >> [tarefa_2,tarefa_4]
+        tarefa_1 >> [tarefa_2,tarefa_3]
         tarefa_3 >> [tarefa_4]
